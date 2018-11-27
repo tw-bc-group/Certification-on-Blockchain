@@ -1,0 +1,8 @@
+<template name="head">
+  <view class="page-head">
+    <view class="page-head-title">{{title ? title : '空'}}</view>
+    <view class="page-head-line"></view>
+    
+    <view wx:if="{{desc}}" class="page-head-desc">{{desc ? desc : '空'}}</view>
+  </view>
+</template>
