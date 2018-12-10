@@ -4,29 +4,15 @@ const app = getApp();
 
 Page({
     data: {
-        motto: 'Hello World',
-        review: '开始复习',
-        edit: "编辑内容",
-        viewAll: "查看全部词条",
+        placeholderText: "请填写姓名：",
+        search: "查询",
         userInfo: {},
         hasUserInfo: false,
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
         time: []
     },
-    goToReview: function () {
-        // wx.navigateTo({
-        //     url: '../review/review'
-        // });
-        wx.showToast({
-            title: "赶工中",
-            icon: "loading",
-            duration: 1500
-        });
-    },
-    goToEdit: function () {
-        wx.navigateTo({
-            url: '../edit/edit'
-        });
+    goToSearchResult: function() {
+      console.log('search!');
     },
     onLoad: function () {
         if (app.globalData.userInfo) {
@@ -62,15 +48,5 @@ Page({
             userInfo: e.detail.userInfo,
             hasUserInfo: true
         })
-    },
-    goToViewAllWords: function () {
-        wx.navigateTo({
-            url: '../allWords/allWords'
-        });
-        // wx.showToast({
-        //     title: "赶工中",
-        //     icon: "loading",
-        //     duration: 1500
-        // });
     }
 })

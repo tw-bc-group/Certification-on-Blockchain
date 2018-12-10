@@ -27,34 +27,8 @@ App({
                 }
             }
         });
-
-        var colorList = this.globalData.importantLevelColor;
-        var levelList = this.globalData.importantLevelList;
-        var colorLevelMap = {};
-        for (var index = 0; index < colorList.length; index++){
-            var color = colorList[index];
-            var level = levelList[index];
-            colorLevelMap[color] = level;
-        }
-
-        this.globalData.importantLevelColorMap = colorLevelMap
-    },
-    onShow: function () {
-        wx.onUserCaptureScreen(function (res) {
-            wx.showToast({
-                title: '截图了呀～',
-                icon: 'success',
-                duration: 1000,
-            })
-        })
     },
     globalData: {
         userInfo: null,
-        curriculumList: ["普通心理学", "变态心理学", "现代心理与教育统计学", "心理测量与测验", "实验心理学", "发展心理学", "心理咨询与治疗", "社会心理学"],
-        curriculumIndex: 0,
-        importantLevelColor: ["red", "lightseagreen", "#9B9B9B"],
-        importantLevelList: ["重点记忆", "记忆", "理解"],
-        importantLevelIndex: 0,
-        importantLevelColorMap: {}
     }
 })

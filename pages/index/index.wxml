@@ -1,20 +1,13 @@
-<!--index.wxml-->
-<view class="container">
-  <view class="userinfo">
-    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+<view class='container'>
+  <view class='userInfo'>
+    <button wx:if='{{!hasUserInfo && canIUse}}' open-type='getUserInfo' bindgetuserinfo='getUserInfo' class='btn user-btn'> 获取头像昵称 </button>
     <block wx:else>
-      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text class="userinfo-nickname">Hi, {{userInfo.nickName}}</text>
+      <image class='userInfo-avatar' src='{{userInfo.avatarUrl}}' background-size='cover'></image>
+      <text class='userInfo-nickname'>Hi, {{userInfo.nickName}}</text>
     </block>
   </view>
-  <view class="usermotto">
-    <!-- <text class="user-motto">{{motto}}</text> -->
-    <text bindtap='goToReview' class="user-motto">{{review}}</text>
-  </view>
-  <view style="margin-top:30px;">
-    <text bindtap='goToEdit' class="user-motto" style="display:block;text-align:center;font-family:Arial;">{{edit}}</text>
-  </view>
-  <view style="margin-top:30px;">
-    <text bindtap='goToViewAllWords' class="user-motto" style="display:block;text-align:center;font-family:Arial;">{{viewAll}}</text>
+  <view class='search-wrapper'>
+    <input type='text' class='search-input' placeholder='请填写姓名：'></input>
+    <button bindtap='goToSearchResult' class='btn search-btn'>查询</button>
   </view>
 </view>

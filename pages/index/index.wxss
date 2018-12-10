@@ -1,4 +1,3 @@
-/**index.wxss**/
 .container {
   height: 100%;
   display: flex;
@@ -9,27 +8,30 @@
   box-sizing: border-box;
 }
 
-.add-padding {
-    padding: 200rpx, 0;
-}
-.userinfo {
+.userInfo {
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.userinfo-avatar {
-  width: 128rpx; 
-  height: 128rpx; 
-  margin: 20rpx;
+.userInfo-avatar {
+  width: 60px; 
+  height: 60px; 
   border-radius: 50%;
 }
 
-.userinfo-nickname {
+.userInfo-nickname {
   color: #aaa;
 }
 
-.usermotto {
-   margin-top: 150px; 
-   font-family: Arial;
+.search-input {
+  font-size: 16px;
+  margin: 30px 0 20px;
+  border-bottom: 1px solid #DFDFDF;
+}
+
+.btn {
+  font-size: 16px;
+  height: 2em;
+  line-height: 2em;
 }

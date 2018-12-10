@@ -1,16 +1,12 @@
 {
     "pages": [
-        "pages/index/index",
-        "pages/logs/logs",
-        "pages/edit/edit",
-        "pages/review/review",
-        "pages/allWords/allWords"
+        "pages/index/index"
     ],
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "NoaLand",
+        "navigationBarTitleText": "思沃认证",
         "navigationBarTextStyle": "black",
-        "enablePullDownRefresh": "true"
+        "enablePullDownRefresh": true
     }
 }
