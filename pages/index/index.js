@@ -1,18 +1,16 @@
-//index.js
-//获取应用实例
 const app = getApp();
 
 Page({
     data: {
-        placeholderText: "请填写姓名：",
-        search: "查询",
         userInfo: {},
         hasUserInfo: false,
         canIUse: wx.canIUse('button.open-type.getUserInfo'),
         time: []
     },
     goToSearchResult: function() {
-      console.log('search!');
+      wx.navigateTo({
+        url: '../certification/certification'
+      });
     },
     onLoad: function () {
         if (app.globalData.userInfo) {

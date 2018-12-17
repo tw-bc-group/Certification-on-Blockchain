@@ -1,0 +1,15 @@
+<view class="certification">
+  <text class='title title__chinese block-element'>授 予</text>
+  <view class='title-wrapper'>
+    <text class='title title__english block-element'>CERTIFICATE</text>
+    <text class='sub-title block-element'>of Completion to</text>
+  </view>
+  <text class='winner-name block-element'>{{certification.winner.name}}</text>
+  <text class='subject block-element'>{{certification.subject}}</text>
+  <text class='award-date block-element'>{{certification.awardDate}}</text>
+  <view class='issuer-wrapper'>
+    <text wx:for='{{certification.secondaryIssuers}}' wx:for-item='secondaryIssuer' class='issuer secondary-issuer'>{{secondaryIssuer}}</text>
+    <text class='issuer primary-issuer'>{{certification.primaryIssuer}}</text>
+  </view>
+    <text wx:if='{{certification.expiredDate}}' class='expired-date block-element'>Expired at: {{certification.expiredDate}}</text>
+</view>

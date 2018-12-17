@@ -1,0 +1,84 @@
+.certification {
+  margin: 10px;
+  padding: 0 10px 5px;
+  border: 1px solid #9A767F;
+  text-align: center;
+  font-weight: 400;
+}
+
+.block-element {
+  display: block;
+}
+
+.title__chinese {
+  background-color: #A23B3F;
+  width: 160px;
+  color: white;
+  font-size: 16px;
+  margin: 0 auto;
+}
+
+.title-wrapper {
+ margin: 30px 0 20px; 
+ position: relative;
+}
+
+.title__english {
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.sub-title {
+  color: #696A66;
+}
+
+.sub-title::before {
+    content: '';
+    position: absolute;         
+    top: 42px;
+    left: 19%;
+    background: #696A66;       
+    width: 8%;
+    height: 1px;
+}
+
+.sub-title::after {
+    content: '';
+    position: absolute;         
+    top: 42px;
+    right: 19%;
+    background: #696A66;       
+    width: 8%;
+    height: 1px;
+}
+
+.winner-name {
+  font-size: 30px;
+  color: #9A767F;
+}
+
+.subject {
+  margin-top: 20px;
+  text-transform: uppercase;
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.award-date {
+  font-size: 16px;
+}
+
+.issuer-wrapper {
+  margin-top: 35px;
+  text-align: left;
+}
+
+.issuer {
+  font-size: 14px;
+  margin-right: 10px;
+}
+
+.expired-date { 
+  font-size: 10px;
+  text-align: right;
+}
