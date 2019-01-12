@@ -1,6 +1,6 @@
 const app = getApp()
 const bgGenerator = require('../../pipe/bgGenerator.js')
-const aclogo = require('../../image/aclogo.js')
+const logoGenerator = require('../../pipe/logoGenerator.js')
 
 Page({
   data: {
@@ -13,16 +13,16 @@ Page({
       subject: 'agile coach',
       awardDate: '3rd Jan 2019',
       expiredDate: '3rd Jan 2021',
-      primaryIssuer: 'ThoughtWorks',
-      secondaryIssuers: ['TAL Apparel']
+      partner: 'Huawei'
     },
     hashCode: '0x5c47e30dc7f82167de',
-    logo: aclogo.url,
   },
   onLoad: function() {
+    const { certification } = this.data
     this.setData(
      {
-        backgroundImage: bgGenerator.genrate(this.data.certification.type)
+        backgroundImage: bgGenerator.genrate(certification.type),
+        logos: logoGenerator.genrate(certification.type, certification.partner)
      }
     )
   }

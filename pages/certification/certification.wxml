@@ -1,19 +1,21 @@
 <view class='certification' style='background-image: url({{backgroundImage}})'>
-  <image class='logo' src='{{logo}}'></image>
+  <view class='logo-wrapper'>
+    <image  wx:for='{{logos}}' wx:for-item='logo' wx:key='unique' class='logo' src='{{logo}}'></image>
+  </view>
   <view class='display-wrapper'>
     <view class='title-wrapper'>
       <text class='title block-el'>certification of</text>
       <text class='title block-el'>completion</text>
     </view>
-    <view class='winner-wrapper'>
+    <view class='winner-wrapper '>
       <text class='winner block-el'>{{certification.winner.firstName}}</text>
       <text class='winner block-el'>{{certification.winner.lastName}}</text>
     </view>
-    <view class='content-wrapper'>
+    <view class='content-wrapper padding-wrapper'>
       <text class='subject block-el'>{{certification.subject}}</text>
       <text class='hash-code block-el'>{{hashCode}}</text>
     </view>
-    <view class='date-wrapper'>
+    <view class='date-wrapper padding-wrapper'>
       <text class='award-date block-el'>{{certification.awardDate}}</text>
       <text wx:if='{{certification.expiredDate}}' class='expired-date block-el'>Expired at: {{certification.expiredDate}}</text>
     </view>
