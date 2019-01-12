@@ -1,10 +1,11 @@
-const app = getApp();
-const bgImgWithOrangeBlue = require('../../image/bgImgWithOrangeBlue.js');
-const aclogo = require('../../image/aclogo.js');
+const app = getApp()
+const bgGenerator = require('../../pipe/bgGenerator.js')
+const aclogo = require('../../image/aclogo.js')
 
 Page({
   data: {
     certification: {
+      type: 'TW',
       winner: {
         firstName: 'John',
         lastName: 'William'
@@ -17,7 +18,12 @@ Page({
     },
     hashCode: '0x5c47e30dc7f82167de',
     logo: aclogo.url,
-    backgroundImage: bgImgWithOrangeBlue.url,
   },
-  onLoad: function() {}
+  onLoad: function() {
+    this.setData(
+     {
+        backgroundImage: bgGenerator.genrate(this.data.certification.type)
+     }
+    )
+  }
 })
