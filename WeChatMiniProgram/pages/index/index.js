@@ -5,11 +5,14 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
-    time: []
+    query: null
+  },
+  inputTyping: function(event){
+    this.setData({query: event.detail.value})
   },
   goToSearchResult: function() {
     wx.navigateTo({
-      url: '../certification/certification'
+      url: `../certification/certification?query=${this.data.query}`
     });
   },
   onLoad: function() {

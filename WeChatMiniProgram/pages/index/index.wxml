@@ -7,7 +7,7 @@
     </block>
   </view>
   <view class='search-wrapper'>
-    <input type='text' class='search-input' placeholder='请填写姓名：'></input>
+    <input type='tel' class='search-input' placeholder='请输入手机号：' value="{{query}}" bindinput="inputTyping"></input>
     <button bindtap='goToSearchResult' class='btn search-btn'>查询</button>
   </view>
 </view>

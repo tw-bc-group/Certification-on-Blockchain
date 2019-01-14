@@ -1,6 +1,7 @@
 const app = getApp()
 const bgGenerator = require('../../pipe/bgGenerator.js')
 const logoGenerator = require('../../pipe/logoGenerator.js')
+const bcClient = require('../../service/bcClient.js')
 
 Page({
   data: {
@@ -17,7 +18,8 @@ Page({
     },
     hashCode: '0x5c47e30dc7f82167de',
   },
-  onLoad: function() {
+  onLoad: function (options) {
+    bcClient.search(options.query)
     const { certification } = this.data
     this.setData(
      {
