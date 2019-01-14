@@ -6,7 +6,7 @@ contract('CACCertificationContract', function(accounts){
         var type = "TW";
         var firstName = "John";
         var lastName = "William";
-        var mobileNumber = 123456;
+        var mobileNumber = web3.utils.hexToBytes(web3.utils.asciiToHex("+86 123456789"));
         var subject = "agile coach";
         var awardDate = new Date(Date.now()).toLocaleDateString();
         var expiredDate = new Date("1/12/2020").toLocaleDateString();
@@ -28,7 +28,7 @@ contract('CACCertificationContract', function(accounts){
         }).then(function(res){
             assert.equal(res.valueOf()[0], firstName);
             assert.equal(res.valueOf()[1], lastName);
-            assert.equal(res.valueOf()[2].valueOf(), mobileNumber);
+            assert.equal(web3.utils.hexToUtf8(res.valueOf()[2].valueOf()), "+86 123456789");
         });
     });
 });
