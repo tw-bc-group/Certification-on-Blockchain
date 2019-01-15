@@ -1,5 +1,3 @@
-const Web3 = require('../3rd/web3.min.js')
-
 const config = require('./config.js')
 
 var certification = {
