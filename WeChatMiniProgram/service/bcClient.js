@@ -1,5 +1,5 @@
 const Web3 = require('../3rd/web3.min.js')
-import { Web3Provider } from '../3rd/reactWeb3.min.js'
+
 const config = require('./config.js')
 
 const search = query => {
@@ -9,10 +9,9 @@ const search = query => {
         config.ABI, config.CONTRACT_ADDRESS)
 
     console.log('cac', cac)
-    // console.log(cac.methods.getCertification([49,49,49]).call().then(console.log))
     console.log('bytes', web3.utils.hexToBytes(web3.utils.asciiToHex("+86 123456789")))
     
-    console.log(cac.methods.getCertification(web3.utils.hexToBytes(web3.utils.asciiToHex("+86 123456789"))).call())
+    console.log(cac.methods.getCertification(web3.utils.hexToBytes(web3.utils.asciiToHex("+86 123456789"))))
     // console.log(cac.methods.getWinner(web3.utils.hexToBytes(web3.utils.asciiToHex("+86 123456789"))).call().then(console.log))
 }
 
