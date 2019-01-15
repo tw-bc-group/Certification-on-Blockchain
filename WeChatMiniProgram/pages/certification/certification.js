@@ -1,12 +1,13 @@
 const app = getApp()
 const bgGenerator = require('../../pipe/bgGenerator.js')
 const logoGenerator = require('../../pipe/logoGenerator.js')
+const hashCodeGenerator = require('../../pipe/hashCodeGenerator.js')
 const bcClient = require('../../service/bcClient.js')
 
 Page({
   data: {
     certification: {
-      type: '',
+      certificationType: '',
       winner: {
         firstName: '',
         lastName: '',
@@ -19,20 +20,21 @@ Page({
     },
     hashCode: '',
   },
-  onLoad: function (options) {
-    const result = bcClient.search(options.query)
-    this.setData(
-     {
-        'certification.winner': result.winner,
-        'certification.type': result.certificationType,
-        'certification.subject': result.subject,
-        'certification.awardDate': result.awardDate,
-        'certification.expiredDate': result.expiredDate,
-        'certification.partner': result.partner,
-        hashCode: result.winner.mobileNumber.substring(0, 19),
-        backgroundImage: bgGenerator.genrate(result.certificationType),
-        logos: logoGenerator.genrate(result.certificationType, result.partner)
-     }
-    )
+  onLoad: function(options) {
+    const { getCertification, getWinner} = bcClient
+    const { query } = options
+    wx.showLoading({
+      title: '加载中',
+    })
+    Promise.all([getCertification(query), getWinner(query)]).then((res) => {
+      this.setData({
+        certification: res[0],
+        'certification.winner': res[1],
+        hashCode: hashCodeGenerator.genrate(res[1].mobileNumber),
+        backgroundImage: bgGenerator.genrate(res[0].certificationType),
+        logos: logoGenerator.genrate(res[0].certificationType, res[0].partner)
+      })
+      wx.hideLoading()
+    })
   }
 })

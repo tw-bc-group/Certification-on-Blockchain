@@ -1,45 +1,22 @@
-const config = require('./config.js')
+const apiHost = 'http://139.219.2.9:3000'
 
-var certification = {
-    certificationType: "",
-    subject: "",
-    winner: {
-        firstName: "",
-        lastName: "",
-        mobileNumber: ""
-    },
-    awardDate: "",
-    expiredDate: "",
-    partner: ""
+const getCertification = query => {
+  return new Promise((resolve, reject) => wx.request({
+    url: apiHost + '/certifications/' + query,
+    method: 'GET',
+    success: (res) => resolve(res.data)
+  }))
 }
 
-const search = query => {
-    
-    wx.request({
-        url: 'http://139.219.2.9:3000/certifications/'+query,
-        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT  
-        success: function (res) {
-            certification.certificationType = res.data.certificationType
-            certification.subject = res.data.subject
-            certification.awardDate = res.data.awardDate
-            certification.expiredDate = res.data.expiredDate
-            certification.partner = res.data.partner
-        }
-    })
-
-    wx.request({
-        url: 'http://139.219.2.9:3000/winners/' + query,
-        method: 'GET', // OPTIONS, GET, HEAD, POST, PUT, DELETE, TRACE, CONNECT  
-        success: function (res) {
-            certification.winner.firstName = res.data.firstName
-            certification.winner.lastName = res.data.lastName
-            certification.winner.mobileNumber = res.data.mobileNumber
-        }
-    })
-
-    return certification
+const getWinner = query => {
+  return new Promise((resolve, reject) => wx.request({
+    url: apiHost+ '/winners/' + query,
+    method: 'GET',
+    success: (res) => resolve(res.data)
+  }))
 }
 
 module.exports = {
-  search: search
+  getCertification: getCertification,
+  getWinner: getWinner
 }
