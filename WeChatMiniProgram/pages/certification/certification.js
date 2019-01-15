@@ -6,26 +6,32 @@ const bcClient = require('../../service/bcClient.js')
 Page({
   data: {
     certification: {
-      type: 'TW',
+      type: '',
       winner: {
-        firstName: 'John',
-        lastName: 'William'
+        firstName: '',
+        lastName: '',
+        mobileNumber: ''
       },
-      subject: 'agile coach',
-      awardDate: '3rd Jan 2019',
-      expiredDate: '3rd Jan 2021',
-      partner: 'Huawei'
+      subject: '',
+      awardDate: '',
+      expiredDate: '',
+      partner: ''
     },
-    hashCode: '0x5c47e30dc7f82167de',
+    hashCode: '',
   },
   onLoad: function (options) {
-    bcClient.search(options.query)
-    console.log("query: ", options.query)
-    const { certification } = this.data
+    const result = bcClient.search(options.query)
     this.setData(
      {
-        backgroundImage: bgGenerator.genrate(certification.type),
-        logos: logoGenerator.genrate(certification.type, certification.partner)
+        'certification.winner': result.winner,
+        'certification.type': result.certificationType,
+        'certification.subject': result.subject,
+        'certification.awardDate': result.awardDate,
+        'certification.expiredDate': result.expiredDate,
+        'certification.partner': result.partner,
+        hashCode: result.winner.mobileNumber.substring(0, 19),
+        backgroundImage: bgGenerator.genrate(result.certificationType),
+        logos: logoGenerator.genrate(result.certificationType, result.partner)
      }
     )
   }

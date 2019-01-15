@@ -63,7 +63,7 @@ function getCertification(mobileNumber) {
         return {
             certificationType: result.certificationType, 
             subject: result.subject, 
-            awardDate: result.subject, 
+            awardDate: result.awardDate, 
             expiredDate: result.expiredDate, 
             partner: result.partner
         } 
