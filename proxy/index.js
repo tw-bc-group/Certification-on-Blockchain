@@ -2,8 +2,10 @@ const express = require("express")
 const axios = require("axios")
 const Web3 = require("web3")
 const app = express()
+const cors = require("cors")
 const port = 3000
 
+app.use(cors())
 app.get('/winners/:mobileNumber', (req, res) => getWinner(req.params.mobileNumber).then(r => res.send(r)))
 app.get('/certifications/:mobileNumber', (req, res) => getCertification(req.params.mobileNumber).then(r => res.send(r)))
 
