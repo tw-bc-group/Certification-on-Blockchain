@@ -20,6 +20,7 @@ Page({
   },
   onLoad: function (options) {
     bcClient.search(options.query)
+    console.log("query: ", options.query)
     const { certification } = this.data
     this.setData(
      {
