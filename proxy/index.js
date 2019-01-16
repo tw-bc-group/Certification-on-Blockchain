@@ -1,3 +1,5 @@
+const https = require("https")
+const fs = require("fs")
 const express = require("express")
 const axios = require("axios")
 const Web3 = require("web3")
@@ -5,11 +7,19 @@ const app = express()
 const cors = require("cors")
 const port = 3000
 
+var privateKey  = fs.readFileSync('/etc/letsencrypt/live/cac.thoughtworks.cn/privkey.pem', 'utf8');
+var certificate = fs.readFileSync('/etc/letsencrypt/live/cac.thoughtworks.cn/cert.pem', 'utf8');
+
+var credentials = {key: privateKey, cert: certificate};
+
 app.use(cors())
+app.use(express.static('dist'))
+
 app.get('/winners/:mobileNumber', (req, res) => getWinner(req.params.mobileNumber).then(r => res.send(r)))
 app.get('/certifications/:mobileNumber', (req, res) => getCertification(req.params.mobileNumber).then(r => res.send(r)))
 
-app.listen(port, () => console.log(`the twcac proxy app listening on port ${port}!`))
+var httpsServer = https.createServer(credentials, app)
+httpsServer.listen(port)
 
 const web3 = new Web3()
 
@@ -29,7 +39,6 @@ const target = axios.create({
     },
     timeout: 1000
 })
-
 
 function getWinner(mobileNumber) {
     return target.get("/api", { params: { data: encodingFunc("getWinner", mobileNumber)} })
