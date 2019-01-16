@@ -28,19 +28,19 @@
 </style>
 
 <script>
-  export default {
-    name: 'home',
-    components: {},
-    data() {
-      return {
-        searchInput: null
-      }
-    },
-    methods: {
-      clickHandler() {
-        const query = this.searchInput
-        this.$router.push({name: 'certification', query: {query}})
-      }
+export default {
+  name: 'home',
+  components: {},
+  data () {
+    return {
+      searchInput: null
+    }
+  },
+  methods: {
+    clickHandler () {
+      const query = this.searchInput
+      this.$router.push({ name: 'certification', query: { query } })
     }
   }
+}
 </script>
