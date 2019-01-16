@@ -2,7 +2,7 @@ const apiHost = 'https://cac.thoughtworks.cn:3000'
 
 const getCertification = query => {
   return new Promise((resolve, reject) => wx.request({
-    url: apiHost + '/certifications/' + query,
+    url: apiHost + '/certifications/"' + query + '"',
     method: 'GET',
     success: (res) => resolve(res.data)
   }))
@@ -10,7 +10,7 @@ const getCertification = query => {
 
 const getWinner = query => {
   return new Promise((resolve, reject) => wx.request({
-    url: apiHost+ '/winners/' + query,
+    url: apiHost+ '/winners/"' + query + '"',
     method: 'GET',
     success: (res) => resolve(res.data)
   }))
