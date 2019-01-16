@@ -1,7 +1,7 @@
 <template>
   <div class="certification" :style="{backgroundImage: 'url('+ backgroundImage +')'}">
     <div class="logo-wrapper">
-      <img v-for="logo in logos" :src="logo" class="logo"/>
+      <img v-for="logo in logos" :src="logo" class="logo" :key="logo"/>
     </div>
     <div class="display-wrapper">
       <div class="title-wrapper">
@@ -13,8 +13,8 @@
         <p>{{certification.winner.lastName}}</p>
       </div>
       <div class="content-wrapper padding-wrapper">
-        <p>{{certification.subject}}</p>
-        <p>{{hashCode}}</p>
+        <p class="subject">{{certification.subject}}</p>
+        <p class="hash-code">{{hashCode}}</p>
       </div>
       <div class="date-wrapper padding-wrapper">
         <p>{{certification.awardDate}}</p>
@@ -63,9 +63,6 @@
   .padding-wrapper
     padding 0 4px
 
-  .content-wrapper
-    margin-top 30px
-
   .subject
     padding-top 29px
     font-size 20px
@@ -85,110 +82,108 @@
 </style>
 
 <script>
-  import httpDriver from '../driver/http'
-  import * as R from 'ramda'
-  import logo from '../assets/logo.jpeg'
-  import logoCorporate from '../assets/logoCorporate.png'
-  import huaweiLogo from '../assets/huaweiLogo.png'
-  import bgImgTW from '../assets/bgImgTW.png'
-  import bgImgCorporate from '../assets/bgImgCorporate.png'
+import httpDriver from '../driver/http'
+import * as R from 'ramda'
+import logo from '../assets/logo.jpeg'
+import logoCorporate from '../assets/logoCorporate.png'
+import huaweiLogo from '../assets/huaweiLogo.png'
+import bgImgTW from '../assets/bgImgTW.png'
+import bgImgCorporate from '../assets/bgImgCorporate.png'
 
-  const hashCodeGenerator = (str) => str.substring(0, 19)
+const hashCodeGenerator = (str) => str.substring(0, 19)
 
-  const bgGenerator = R.cond([
-      [
-        R.equals('Corporate'), R.always(bgImgCorporate)
-      ],
-      [
-        R.equals('Community'), R.always(bgImgCorporate)
-      ],
-      [
-        R.equals('University'), R.always(bgImgCorporate)
-      ],
-      [
-        R.T, R.always(bgImgTW)
-      ],
-    ])
+const bgGenerator = R.cond([
+  [
+    R.equals('Corporate'), R.always(bgImgCorporate)
+  ],
+  [
+    R.equals('Community'), R.always(bgImgCorporate)
+  ],
+  [
+    R.equals('University'), R.always(bgImgCorporate)
+  ],
+  [
+    R.T, R.always(bgImgTW)
+  ]
+])
 
-  const partnerLogo = R.cond([
+const partnerLogo = R.cond([
+  [
+    R.equals('Huawei'), R.always(huaweiLogo)
+  ],
+  [
+    R.equals('Github'), R.always(huaweiLogo)
+  ],
+  [
+    R.equals('BeiJingUniversity'), R.always(huaweiLogo)
+  ],
+  [
+    R.T, R.always([])
+  ]])
+
+const logoGenerator = (type, partner) => {
+  return R.cond([
     [
-      R.equals('Huawei'), R.always(huaweiLogo)
+      R.equals('Corporate'), R.always([logoCorporate, partnerLogo(partner)])
     ],
     [
-      R.equals('Github'), R.always(huaweiLogo)
+      R.equals('Community'), R.always([logoCorporate, partnerLogo(partner)])
     ],
     [
-      R.equals('BeiJingUniversity'), R.always(huaweiLogo)
+      R.equals('University'), R.always([logoCorporate, partnerLogo(partner)])
     ],
     [
-      R.T, R.always([])
-    ]])
+      R.T, R.always([logo])
+    ]
+  ])(type)
+}
 
-
-  const logoGenerator = (type, partner) => {
-    return R.cond([
-        [
-          R.equals('Corporate'), R.always([logoCorporate, partnerLogo(partner)])
-        ],
-        [
-          R.equals('Community'), R.always([logoCorporate, partnerLogo(partner)])
-        ],
-        [
-          R.equals('University'), R.always([logoCorporate, partnerLogo(partner)])
-        ],
-        [
-          R.T, R.always([logo])
-        ],
-      ])(type)
-  }
-
-
-  export default {
-    name: 'certification',
-    components: {},
-    data() {
-      return {
-        certification: {
-          certificationType: '',
-          winner: {
-            firstName: '',
-            lastName: '',
-            mobileNumber: ''
-          },
-          subject: '',
-          awardDate: '',
-          expiredDate: '',
-          partner: ''
+export default {
+  name: 'certification',
+  components: {},
+  data () {
+    return {
+      certification: {
+        certificationType: '',
+        winner: {
+          firstName: '',
+          lastName: '',
+          mobileNumber: ''
         },
-        hashCode: null,
-        backgroundImage: null,
-        logos: null
-      }
-    },
-    methods: {
-      dataProvider({getCertification, getWinner }) {
-        const { query }= this.$route.query
-        const certification = getCertification(query)
-        const winner = getWinner(query)
-
-        Promise.all([certification, winner]).then(res => {
-          const cr = res[0].data
-          const wr = res[1].data
-          this.certification = cr
-          this.certification.winner = wr
-          this.hashCode = hashCodeGenerator(wr.mobileNumber)
-          this.backgroundImage = bgGenerator(cr.certificationType)
-          this.logos = logoGenerator(cr.certificationType, cr.partner)
-        })
-      }
-    },
-    pures: {
-      hashCodeGenerator,
-      bgGenerator,
-      logoGenerator
-    },
-    created() {
-      this.dataProvider(httpDriver)
+        subject: '',
+        awardDate: '',
+        expiredDate: '',
+        partner: ''
+      },
+      hashCode: null,
+      backgroundImage: null,
+      logos: null
     }
+  },
+  methods: {
+    dataProvider ({ getCertification, getWinner }) {
+      const { query } = this.$route.query
+      const certification = getCertification(query)
+      const winner = getWinner(query)
+
+      Promise.all([certification, winner]).then(res => {
+        const cr = res[0].data
+        const wr = res[1].data
+        this.certification = cr
+        this.certification.winner = wr
+        this.hashCode = hashCodeGenerator(wr.mobileNumber)
+        this.backgroundImage = bgGenerator(cr.certificationType)
+        this.logos = logoGenerator(cr.certificationType, cr.partner)
+      })
+    }
+  },
+  pures: {
+    hashCodeGenerator,
+    bgGenerator,
+    logoGenerator
+  },
+  created () {
+    this.dataProvider(httpDriver)
   }
+}
 </script>
