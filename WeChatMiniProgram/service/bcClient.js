@@ -1,4 +1,4 @@
-const apiHost = 'http://139.219.2.9:3000'
+const apiHost = 'https://cac.thoughtworks.cn:3000'
 
 const getCertification = query => {
   return new Promise((resolve, reject) => wx.request({
