@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <h3>思沃认证</h3>
-    <input type="text" class="search-input" placeholder="请输入手机号：" v-model="searchInput">
+    <input type="number" class="search-input" placeholder="请输入手机号：" v-model="searchInput">
     <button @click="clickHandler" class="search-btn">查询</button>
   </div>
 </template>
@@ -38,7 +38,6 @@
     },
     methods: {
       clickHandler() {
-        console.log(this.searchInput)
         const query = this.searchInput
         this.$router.push({name: 'certification', query: {query}})
       }

@@ -10,7 +10,7 @@
   -moz-osx-font-smoothing grayscale
   text-align center
   color #2c3e50
-  max-width 500px;
+  max-width 400px;
 
 *
   margin 0

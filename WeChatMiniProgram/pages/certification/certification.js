@@ -26,7 +26,7 @@ Page({
     wx.showLoading({
       title: '加载中',
     })
-    Promise.all([getCertification(query), getWinner(query)]).then((res) => {
+    Promise.all([getCertification(JSON.stringify(query)), getWinner(JSON.stringify(query))]).then((res) => {
       this.setData({
         certification: res[0],
         'certification.winner': res[1],

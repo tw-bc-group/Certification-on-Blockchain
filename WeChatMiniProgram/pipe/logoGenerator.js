@@ -1,17 +1,21 @@
 const R = require('../3rd/ramda.min.js')
 const logo = require('../image/logo.js')
 const logoCorporate = require('../image/logoCorporate.js')
+const logoCommunity = require('../image/logoCommunity.js')
+const logoUniversity = require('../image/logoUniversity.js')
 const huaweiLogo = require('../image/huaweiLogo.js')
+const githubLogo = require('../image/githubLogo.js')
+const universityLogo = require('../image/universityLogo.js')
 
 const partnerLogo = R.cond([
   [
     R.equals('Huawei'), R.always(huaweiLogo)
   ],
   [
-    R.equals('Github'), R.always(huaweiLogo)
+    R.equals('Github'), R.always(githubLogo)
   ],
   [
-    R.equals('BeiJingUniversity'), R.always(huaweiLogo)
+    R.equals('BeiJingUniversity'), R.always(universityLogo)
   ],
   [
     R.T, R.always([])
@@ -26,10 +30,10 @@ const genrate = (type, partner) => {
         R.equals('Corporate'), R.always([logoCorporate, partnerLogo(partner)])
       ],
       [
-        R.equals('Community'), R.always([logoCorporate, partnerLogo(partner)])
+        R.equals('Community'), R.always([logoCommunity, partnerLogo(partner)])
       ],
       [
-        R.equals('University'), R.always([logoCorporate, partnerLogo(partner)])
+        R.equals('University'), R.always([logoUniversity, partnerLogo(partner)])
       ],
       [
         R.T, R.always([logo])

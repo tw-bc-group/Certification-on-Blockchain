@@ -22,9 +22,9 @@
       </div>
     </div>
   </div>
-</template>
+  </template>
 
-<style scoped lang="stylus">
+  <style scoped lang="stylus">
   .certification
     margin 10px
     font-weight 400
@@ -32,13 +32,12 @@
     background-size 100% 100%
     text-align left
 
-  .logo-wrapper
-    padding 15px 20px
-
   .logo
-    width 50px
-    height 50px
+    padding 15px 10px 15px 5px
+    width 65px
+    height 80px
     display inline-block
+    object-fit contain
 
   .display-wrapper
     padding 0 100px 0 50px
@@ -84,11 +83,17 @@
 <script>
 import httpDriver from '../driver/http'
 import * as R from 'ramda'
+import bgImgTW from '../assets/bgImgTW.png'
+import bgImgCorporate from '../assets/bgImgCorporate.jpg'
+import bgImgCommunity from '../assets/bgImgCommunity.jpg'
+import bgImgUniversity from '../assets/bgImgUniversity.jpg'
 import logo from '../assets/logo.jpeg'
 import logoCorporate from '../assets/logoCorporate.png'
+import logoCommunity from '../assets/logoCommunity.png'
+import logoUniversity from '../assets/logoUniversity.png'
 import huaweiLogo from '../assets/huaweiLogo.png'
-import bgImgTW from '../assets/bgImgTW.png'
-import bgImgCorporate from '../assets/bgImgCorporate.png'
+import communityLogo from '../assets/communityLogo.png'
+import universityLogo from '../assets/universityLogo.png'
 
 const hashCodeGenerator = (str) => str.substring(0, 19)
 
@@ -97,10 +102,10 @@ const bgGenerator = R.cond([
     R.equals('Corporate'), R.always(bgImgCorporate)
   ],
   [
-    R.equals('Community'), R.always(bgImgCorporate)
+    R.equals('Community'), R.always(bgImgCommunity)
   ],
   [
-    R.equals('University'), R.always(bgImgCorporate)
+    R.equals('University'), R.always(bgImgUniversity)
   ],
   [
     R.T, R.always(bgImgTW)
@@ -112,10 +117,10 @@ const partnerLogo = R.cond([
     R.equals('Huawei'), R.always(huaweiLogo)
   ],
   [
-    R.equals('Github'), R.always(huaweiLogo)
+    R.equals('Github'), R.always(communityLogo)
   ],
   [
-    R.equals('BeiJingUniversity'), R.always(huaweiLogo)
+    R.equals('BeiJingUniversity'), R.always(universityLogo)
   ],
   [
     R.T, R.always([])
@@ -127,10 +132,10 @@ const logoGenerator = (type, partner) => {
       R.equals('Corporate'), R.always([logoCorporate, partnerLogo(partner)])
     ],
     [
-      R.equals('Community'), R.always([logoCorporate, partnerLogo(partner)])
+      R.equals('Community'), R.always([logoCommunity, partnerLogo(partner)])
     ],
     [
-      R.equals('University'), R.always([logoCorporate, partnerLogo(partner)])
+      R.equals('University'), R.always([logoUniversity, partnerLogo(partner)])
     ],
     [
       R.T, R.always([logo])
@@ -163,8 +168,8 @@ export default {
   methods: {
     dataProvider ({ getCertification, getWinner }) {
       const { query } = this.$route.query
-      const certification = getCertification(query)
-      const winner = getWinner(query)
+      const certification = getCertification(JSON.stringify(query))
+      const winner = getWinner(JSON.stringify(query))
 
       Promise.all([certification, winner]).then(res => {
         const cr = res[0].data
