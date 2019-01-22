@@ -1,26 +1,29 @@
 <template>
-  <div class="certification" :style="{backgroundImage: 'url('+ backgroundImage +')'}">
-    <div class="logo-wrapper">
-      <img v-for="logo in logos" :src="logo" class="logo" :key="logo"/>
+  <div>
+    <div class="certification" :style="{backgroundImage: 'url('+ backgroundImage +')'}" v-if="!isLoading">
+      <div class="logo-wrapper">
+        <img v-for="logo in logos" :src="logo" class="logo" :key="logo"/>
+      </div>
+      <div class="display-wrapper">
+        <div class="title-wrapper">
+          <p>certification of</p>
+          <p>completion</p>
+        </div>
+        <div class="winner-wrapper">
+          <p>{{certification.winner.firstName}}</p>
+          <p>{{certification.winner.lastName}}</p>
+        </div>
+        <div class="content-wrapper padding-wrapper">
+          <p class="subject">{{certification.subject}}</p>
+          <p class="hash-code">{{hashCode}}</p>
+        </div>
+        <div class="date-wrapper padding-wrapper">
+          <p>{{certification.awardDate}}</p>
+          <p v-if="certification.expiredDate">Expired at: {{certification.expiredDate}}</p>
+        </div>
+      </div>
     </div>
-    <div class="display-wrapper">
-      <div class="title-wrapper">
-        <p>certification of</p>
-        <p>completion</p>
-      </div>
-      <div class="winner-wrapper">
-        <p>{{certification.winner.firstName}}</p>
-        <p>{{certification.winner.lastName}}</p>
-      </div>
-      <div class="content-wrapper padding-wrapper">
-        <p class="subject">{{certification.subject}}</p>
-        <p class="hash-code">{{hashCode}}</p>
-      </div>
-      <div class="date-wrapper padding-wrapper">
-        <p>{{certification.awardDate}}</p>
-        <p v-if="certification.expiredDate">Expired at: {{certification.expiredDate}}</p>
-      </div>
-    </div>
+    <infinite-loading v-if="isLoading"></infinite-loading>
   </div>
   </template>
 
@@ -148,6 +151,7 @@ export default {
   components: {},
   data () {
     return {
+      isLoading: true,
       certification: {
         certificationType: '',
         winner: {
@@ -168,8 +172,8 @@ export default {
   methods: {
     dataProvider ({ getCertification, getWinner }) {
       const { query } = this.$route.query
-      const certification = getCertification(JSON.stringify(query))
-      const winner = getWinner(JSON.stringify(query))
+      const certification = getCertification(query)
+      const winner = getWinner(query)
 
       Promise.all([certification, winner]).then(res => {
         const cr = res[0].data
@@ -179,6 +183,7 @@ export default {
         this.hashCode = hashCodeGenerator(wr.mobileNumber)
         this.backgroundImage = bgGenerator(cr.certificationType)
         this.logos = logoGenerator(cr.certificationType, cr.partner)
+        this.isLoading = false
       })
     }
   },

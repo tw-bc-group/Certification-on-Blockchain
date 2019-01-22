@@ -16,7 +16,7 @@ export default new Router({
     {
       path: '/certification',
       name: 'certification',
-      component: () => import(/* webpackChunkName: "about" */ './views/Certification.vue')
+      component: () => import('./views/Certification.vue')
     }
   ]
 })
