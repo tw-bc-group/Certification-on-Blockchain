@@ -10,7 +10,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.5.0",
 	"appid": "wx7db6899a6a0e88eb",
-	"projectname": "思沃认证",
+	"projectname": "ThoughtWorks认证",
 	"condition": {
 		"search": {
 			"current": -1,

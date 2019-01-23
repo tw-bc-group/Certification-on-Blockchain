@@ -1,10 +1,10 @@
 <template>
   <div class="home">
-    <h3>思沃认证</h3>
+    <h3>ThoughtWorks认证</h3>
     <input type="number" class="search-input" placeholder="请输入手机号：" v-model="searchInput">
     <button @click="clickHandler" class="search-btn">查询</button>
   </div>
-</template>
+</template>s
 
 <style scoped lang="stylus">
   .home
