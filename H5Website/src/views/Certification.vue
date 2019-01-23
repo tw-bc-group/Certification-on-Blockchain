@@ -25,9 +25,9 @@
     </div>
     <infinite-loading v-if="isLoading"></infinite-loading>
   </div>
-  </template>
+</template>
 
-  <style scoped lang="stylus">
+<style scoped lang="stylus">
   .certification
     margin 10px
     font-weight 400
@@ -86,17 +86,19 @@
 <script>
 import httpDriver from '../driver/http'
 import * as R from 'ramda'
-import bgImgTW from '../assets/bgImgTW.png'
-import bgImgCorporate from '../assets/bgImgCorporate.jpg'
-import bgImgCommunity from '../assets/bgImgCommunity.jpg'
-import bgImgUniversity from '../assets/bgImgUniversity.jpg'
-import logo from '../assets/logo.jpeg'
-import logoCorporate from '../assets/logoCorporate.png'
-import logoCommunity from '../assets/logoCommunity.png'
-import logoUniversity from '../assets/logoUniversity.png'
-import huaweiLogo from '../assets/huaweiLogo.png'
-import communityLogo from '../assets/communityLogo.png'
-import universityLogo from '../assets/universityLogo.png'
+import {
+  bgImgTW,
+  bgImgCorporate,
+  bgImgCommunity,
+  bgImgUniversity,
+  logo,
+  logoCorporate,
+  logoCommunity,
+  logoUniversity,
+  huaweiLogo,
+  communityLogo,
+  universityLogo
+} from '../constant'
 
 const hashCodeGenerator = (str) => str.substring(0, 19)
 
