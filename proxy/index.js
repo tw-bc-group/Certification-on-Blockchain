@@ -7,8 +7,8 @@ const app = express()
 const cors = require("cors")
 const port = 3000
 
-var privateKey  = fs.readFileSync('/etc/letsencrypt/live/cac.thoughtworks.cn/privkey.pem', 'utf8');
-var certificate = fs.readFileSync('/etc/letsencrypt/live/cac.thoughtworks.cn/cert.pem', 'utf8');
+var privateKey  = fs.readFileSync('./privkey.pem', 'utf8');
+var certificate = fs.readFileSync('./cert.pem', 'utf8');
 
 var credentials = {key: privateKey, cert: certificate};
 
