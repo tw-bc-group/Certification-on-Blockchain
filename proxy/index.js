@@ -37,7 +37,7 @@ const target = axios.create({
         to: conf.contractAddress,
         apikey: conf.API_KEY
     },
-    timeout: 1000
+    timeout: 10000
 })
 
 function getWinner(mobileNumber) {
