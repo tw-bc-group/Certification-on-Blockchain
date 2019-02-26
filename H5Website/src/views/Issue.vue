@@ -66,15 +66,15 @@ export default {
   components: {},
   data () {
     return {
-      firstName: "",
-      lastName: "",
-      idCardNumber: "",
-      certificationType: "",
-      subject: "",
-      awardDate: "",
-      expiredDate: "",
-      partner: "",
-      issuer: "",
+      firstName: '',
+      lastName: '',
+      idCardNumber: '',
+      certificationType: '',
+      subject: '',
+      awardDate: '',
+      expiredDate: '',
+      partner: '',
+      issuer: ''
     }
   },
   methods: {
