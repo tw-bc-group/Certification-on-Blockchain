@@ -1,6 +1,9 @@
 pragma solidity >=0.4.20;
 
 contract CACCertificationContract {
+
+    address[] public issuers;
+
     mapping(bytes32 => Certification) public certificationMap;
     mapping(bytes32 => Winner) public winnerMap;
 
@@ -16,6 +19,14 @@ contract CACCertificationContract {
         string awardDate;
         string expiredDate;
         string partner;
+    }
+
+    function setIssuer(address issuer) public {
+        issuers.push(issuer);
+    }
+
+    function countIssuers() public view returns(uint256 count) {
+        count = issuers.length;
     }
 
     function issueCertification(string memory certificationType, string memory firstName, string memory lastName, bytes32 mobileNumber, string memory subject, string memory awardDate, string memory expiredDate, string memory partner) public {
