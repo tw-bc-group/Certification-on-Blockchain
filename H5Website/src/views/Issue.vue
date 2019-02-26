@@ -54,9 +54,7 @@
       height 2em
       font-size 16px
       border-radius 3em
-      -webkit-box-sizing border-box
       box-sizing border-box
-      background -webkit-gradient(linear, left top, right top, from(#056EC2), to(#0ECDCA))
       background linear-gradient(to right, #056EC2, #0ECDCA)
 </style>
 
