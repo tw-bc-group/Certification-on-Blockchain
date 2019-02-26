@@ -18,10 +18,15 @@ module.exports = {
 	networks: {
 		development: {
 			host: '127.0.0.1',
-			port: 8545,
+			port: process.env.npm_package_config_dev_port,
 			network_id: '*'
 		},
-		ropsten: {
+		test: {
+			host: '127.0.0.1',
+			port: process.env.npm_package_config_test_port,
+			network_id: '*'
+		},
+		production: {
 			network_id: 3,
 			gas: 4465030,
 			provider: function() {
