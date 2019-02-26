@@ -1,20 +1,17 @@
 <template>
   <div class="home">
     <h3>ThoughtWorks认证</h3>
-    <input type="number" class="search-input" placeholder="请输入手机号：" v-model="searchInput">
-    <button @click="clickHandler" class="search-btn">查询</button>
+    <router-link to="/search" tag="button" class="btn checker-btn">我是查询者</router-link>
+    <router-link to="/issue" tag="button" class="btn issuer-btn">我是颁发者</router-link>
   </div>
-</template>s
+</template>
 
 <style scoped lang="stylus">
   .home
     margin 20px
-    .search-input
-      width 100%
-      height 4em
-      border-radius 0
-      border-bottom 1px solid darkgrey
-    .search-btn
+    h3
+      margin-bottom 50px
+    .btn
       margin-top 20px
       color white
       width 100%
@@ -23,8 +20,12 @@
       border-radius 3em
       -webkit-box-sizing border-box
       box-sizing border-box
+    .checker-btn
       background -webkit-gradient(linear, left top, right top, from(#F13235), to(#FA913D))
       background linear-gradient(to right, #F13235, #FA913D)
+    .issuer-btn
+      background -webkit-gradient(linear, left top, right top, from(#056EC2), to(#0ECDCA))
+      background linear-gradient(to right, #056EC2, #0ECDCA)
 </style>
 
 <script>
@@ -37,11 +38,6 @@ export default {
     }
   },
   methods: {
-    clickHandler () {
-      if (this.searchInput === null) return
-      const query = JSON.stringify(this.searchInput)
-      this.$router.push({ name: 'certification', query: { query } })
-    }
   }
 }
 </script>
