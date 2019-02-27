@@ -26,6 +26,9 @@
 </style>
 
 <script>
+import abi from '../abi'
+import {contractAddress} from '../constant'
+
 export default {
   name: 'home',
   components: {},
@@ -36,32 +39,20 @@ export default {
   },
   methods: {
     issue() {
-      if (typeof web3 === "undefined") {
-        alert("Cannot find Web3! Please install Metamask extension to issue certification!");
-        return;
+      if (typeof web3 === 'undefined') {
+        alert('Cannot find Web3! Please install Metamask extension to issue certification!')
+        return
       }
 
-      var MyContract = web3.eth.contract([{
-        "constant": true,
-        "inputs": [],
-        "name": "isIssuer",
-        "outputs": [
-          {
-            "name": "result",
-            "type": "bool"
-          }
-        ],
-        "payable": false,
-        "stateMutability": "view",
-        "type": "function"
-      }]);
-      var contract = MyContract.at("0xb42efad749112dd32dc0392b85b40bf72ab9cd34");
+      var MyContract = web3.eth.contract(abi)
+      var contract = MyContract.at(contractAddress)
       contract.isIssuer((e, isIssuer) => {
-        if (!isIssuer) {
-          alert("You are not issuer! Please contact contract owner if you need authorization!");
+        if (e || !isIssuer) {
+          alert('You are not issuer! Please contact contract owner if you need authorization!')
+          return
         }
         this.$router.push({ name: 'issue' })
-      });
+      })
     }
   }
 }
