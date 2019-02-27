@@ -27,8 +27,13 @@ contract CACCertificationContract is Ownable {
         issuers.push(issuer);
     }
 
-    function countIssuers() public view returns(uint256 count) {
-        count = issuers.length;
+    function isIssuer() public view returns(bool result) {
+        for (uint i = 0; i < issuers.length; i++) {
+            if (issuers[i] == msg.sender) {
+                return true;
+            }
+        }
+        return false;
     }
 
     function issueCertification(string memory certificationType, string memory firstName, string memory lastName, bytes32 mobileNumber, string memory subject, string memory awardDate, string memory expiredDate, string memory partner) public {
