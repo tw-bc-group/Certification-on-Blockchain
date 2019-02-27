@@ -1,6 +1,8 @@
 pragma solidity >=0.4.20;
 
-contract CACCertificationContract {
+import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+
+contract CACCertificationContract is Ownable {
 
     address[] public issuers;
 
@@ -21,7 +23,7 @@ contract CACCertificationContract {
         string partner;
     }
 
-    function setIssuer(address issuer) public {
+    function setIssuer(address issuer) public onlyOwner {
         issuers.push(issuer);
     }
 

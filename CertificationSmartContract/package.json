@@ -24,5 +24,8 @@
   "config": {
     "test_port": 7545,
     "dev_port": 8545
+  },
+  "dependencies": {
+    "openzeppelin-solidity": "2.1.3"
   }
 }
