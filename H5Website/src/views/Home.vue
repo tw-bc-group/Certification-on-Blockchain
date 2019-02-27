@@ -2,7 +2,7 @@
   <div class="home">
     <h3>ThoughtWorks认证</h3>
     <router-link to="/search" tag="button" class="btn checker-btn">我是查询者</router-link>
-    <router-link to="/issue" tag="button" class="btn issuer-btn">我是颁发者</router-link>
+    <button @click="issue" class="btn issuer-btn">我是颁发者</button>
   </div>
 </template>
 
@@ -35,6 +35,34 @@ export default {
     }
   },
   methods: {
+    issue() {
+      if (typeof web3 === "undefined") {
+        alert("Cannot find Web3! Please install Metamask extension to issue certification!");
+        return;
+      }
+
+      var MyContract = web3.eth.contract([{
+        "constant": true,
+        "inputs": [],
+        "name": "isIssuer",
+        "outputs": [
+          {
+            "name": "result",
+            "type": "bool"
+          }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+      }]);
+      var contract = MyContract.at("0xb42efad749112dd32dc0392b85b40bf72ab9cd34");
+      contract.isIssuer((e, isIssuer) => {
+        if (!isIssuer) {
+          alert("You are not issuer! Please contact contract owner if you need authorization!");
+        }
+        this.$router.push({ name: 'issue' })
+      });
+    }
   }
 }
 </script>
