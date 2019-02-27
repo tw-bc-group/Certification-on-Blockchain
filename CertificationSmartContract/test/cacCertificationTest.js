@@ -16,7 +16,7 @@ contract('CACCertificationContract', (accounts) => {
         var partner = "Partner";
 
         const cacCertification = getInstance("CACCertificationContract")
-        await cacCertification.methods.issueCertification(type, firstName, lastName, mobileNumber, subject, awardDate, expiredDate, partner).send({ from: accounts[0] });
+        await cacCertification.methods.issueCertification(type, firstName, lastName, mobileNumber, subject, awardDate, expiredDate, partner).send({ from: accounts[0], gas: 1000000 });
         const res = await cacCertification.methods.getCertification(mobileNumber).call();
         assert.equal(res.valueOf()[0], type);
         assert.equal(res.valueOf()[1], subject);
@@ -24,9 +24,9 @@ contract('CACCertificationContract', (accounts) => {
         assert.equal(res.valueOf()[3], expiredDate);
         assert.equal(res.valueOf()[4], partner);
 
-        const winner = cacCertification.methods.getWinner(mobileNumber).call();
+        const winner = await cacCertification.methods.getWinner(mobileNumber).call();
         assert.equal(winner.valueOf()[0], firstName);
         assert.equal(winner.valueOf()[1], lastName);
-        assert.equal(web3.utils.hexToUtf8(winner.valueOf()[2].valueOf()), "+86 123456789");
+        assert.equal(web3.utils.hexToString(winner.valueOf()[2].valueOf()), "+86 123456789");
     });
 });
