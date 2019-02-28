@@ -16,7 +16,6 @@
     <input type="date" class="text-input date-input" placeholder="获得时间：" v-model="awardDate">
     <input type="date" class="text-input date-input" placeholder="过期时间：" v-model="expiredDate">
     <input type="text" class="text-input" placeholder="请输入颁发证书组织：" v-model="partner" v-if="certificationType != 'tw'">
-    <input type="text" class="text-input" placeholder="请输入证书颁发者：" v-model="issuer">
     <button @click="clickHandler" class="confirm-btn">颁发证书</button>
   </div>
 </template>
@@ -59,6 +58,10 @@
 </style>
 
 <script>
+import hash from 'hash.js'
+import abi from '../abi'
+import {contractAddress} from '../constant'
+
 export default {
   name: 'issue',
   components: {},
@@ -72,14 +75,28 @@ export default {
       awardDate: '',
       expiredDate: '',
       partner: '',
-      issuer: ''
     }
   },
   methods: {
     clickHandler () {
-      if (this.searchInput === null) return
-      const query = JSON.stringify(this.searchInput)
-      this.$router.push({ name: 'certification', query: { query } })
+      var MyContract = web3.eth.contract(abi)
+      var contract = MyContract.at(contractAddress)
+      contract.issueCertification(
+        this.certificationType,
+        this.firstName,
+        this.lastName,
+        hash.sha256().update(this.idCardNumber + hash.sha256().update(this.idCardNumber).digest('hex')).digest('hex'),
+        this.subject,
+        this.awardDate,
+        this.expiredDate,
+        this.partner,
+        (error) => {
+        if (error) {
+          alert(`颁发失败，错误信息如下\n\n${error}`)
+          return
+        }
+        alert('颁发成功！')
+      })
     }
   }
 }
