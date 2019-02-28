@@ -6,13 +6,13 @@ contract CACCertificationContract is Ownable {
 
     address[] public issuers;
 
-    mapping(bytes32 => Certification) public certificationMap;
-    mapping(bytes32 => Winner) public winnerMap;
+    mapping(string => Certification) private certificationMap;
+    mapping(string => Winner) private winnerMap;
 
     struct Winner {
         string firstName;
         string lastName;
-        bytes32 hashedIdCardNumber;
+        string hashedIdCardNumber;
     }
 
     struct Certification {
@@ -37,19 +37,19 @@ contract CACCertificationContract is Ownable {
         return false;
     }
 
-    function issueCertification(string memory certificationType, string memory firstName, string memory lastName, bytes32 hashedIdCardNumber, string memory subject, string memory awardDate, string memory expiredDate, string memory partner) public {
+    function issueCertification(string memory certificationType, string memory firstName, string memory lastName, string hashedIdCardNumber, string memory subject, string memory awardDate, string memory expiredDate, string memory partner) public {
         require(isIssuer(), "Issuer Not Found");
         certificationMap[hashedIdCardNumber] = Certification(certificationType, subject, awardDate, expiredDate, partner, msg.sender);
         winnerMap[hashedIdCardNumber] = Winner(firstName, lastName, hashedIdCardNumber);
     }
 
-    function getCertification(bytes32 hashedIdCardNumber) view public returns(string memory, string memory, string memory, string memory, string memory) {
+    function getCertification(string hashedIdCardNumber) view public returns(string memory, string memory, string memory, string memory, string memory) {
         Certification storage cert = certificationMap[hashedIdCardNumber];
         return (cert.certificationType, cert.subject, cert.awardDate, cert.expiredDate, cert.partner);
     }
 
-    function getWinner(bytes32 hashedIdCardNumber) view public returns(string memory, string memory, bytes32) {
+    function getWinner(string hashedIdCardNumber) view public returns(string memory, string memory, string memory) {
         Winner storage winner = winnerMap[hashedIdCardNumber];
-        return (winner.firstName, winner.lastName, bytes32(winner.hashedIdCardNumber));
+        return (winner.firstName, winner.lastName, winner.hashedIdCardNumber);
     }
 }
