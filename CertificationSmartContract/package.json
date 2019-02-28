@@ -9,7 +9,7 @@
     "predeploy": "npm run compile",
     "deploy": "truffle deploy",
     "deploy:dev": "npm run deploy -- --network development",
-    "deoploy:prod": "npm run deploy -- --network production",
+    "deploy:prod": "npm run deploy -- --network production",
     "console": "truffle console --network development"
   },
   "author": "ThoughtWorks",
