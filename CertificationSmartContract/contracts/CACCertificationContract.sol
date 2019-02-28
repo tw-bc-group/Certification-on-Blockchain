@@ -37,8 +37,9 @@ contract CACCertificationContract is Ownable {
         return false;
     }
 
-    function issueCertification(string memory certificationType, string memory firstName, string memory lastName, bytes32 hashedIdCardNumber, string memory subject, string memory awardDate, string memory expiredDate, string memory partner, address issuer) public {
-        certificationMap[hashedIdCardNumber] = Certification(certificationType, subject, awardDate, expiredDate, partner, issuer);
+    function issueCertification(string memory certificationType, string memory firstName, string memory lastName, bytes32 hashedIdCardNumber, string memory subject, string memory awardDate, string memory expiredDate, string memory partner) public {
+        require(isIssuer(), "Issuer Not Found");
+        certificationMap[hashedIdCardNumber] = Certification(certificationType, subject, awardDate, expiredDate, partner, msg.sender);
         winnerMap[hashedIdCardNumber] = Winner(firstName, lastName, hashedIdCardNumber);
     }
 
