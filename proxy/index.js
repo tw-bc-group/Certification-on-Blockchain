@@ -15,8 +15,8 @@ var credentials = {key: privateKey, cert: certificate};
 app.use(cors())
 app.use(express.static('dist'))
 
-app.get('/winners/:mobileNumber', (req, res) => getWinner(req.params.mobileNumber).then(r => res.send(r)))
-app.get('/certifications/:mobileNumber', (req, res) => getCertification(req.params.mobileNumber).then(r => res.send(r)))
+app.get('/winners/:hashedIdCardNumber', (req, res) => getWinner(req.params.hashedIdCardNumber).then(r => res.send(r)))
+app.get('/certifications/:hashedIdCardNumber', (req, res) => getCertification(req.params.hashedIdCardNumber).then(r => res.send(r)))
 
 var httpsServer = https.createServer(credentials, app)
 httpsServer.listen(port)
@@ -40,27 +40,27 @@ const target = axios.create({
     timeout: 10000
 })
 
-function getWinner(mobileNumber) {
-    return target.get("/api", { params: { data: encodingFunc("getWinner", mobileNumber)} })
+function getWinner(hashedIdCardNumber) {
+    return target.get("/api", { params: { data: encodingFunc("getWinner", hashedIdCardNumber)} })
         .then(res => {
             const result = web3.eth.abi.decodeParameters([
                 {"name": "firstName", "type": "string"}, 
                 {"name": "lastName", "type": "string"}, 
-                {"name": "mobileNumber", "type": "bytes32"}], res.data.result)
+                {"name": "hashedIdCardNumber", "type": "string"}], res.data.result)
 
             return { 
                 firstName: result.firstName, 
                 lastName: result.lastName, 
-                mobileNumber: result.mobileNumber
+                hashedIdCardNumber: result.hashedIdCardNumber
             }
         }
     ).catch(console.err)
 }
 
-function getCertification(mobileNumber) {
+function getCertification(hashedIdCardNumber) {
     return target.get("/api", {
         params: {
-            data: encodingFunc("getCertification", mobileNumber)
+            data: encodingFunc("getCertification", hashedIdCardNumber)
         }
     }).then(res => {
         const result = web3.eth.abi.decodeParameters([
@@ -82,11 +82,11 @@ function getCertification(mobileNumber) {
 
 }
 
-function encodingFunc(funcName, mobileNumber) {
+function encodingFunc(funcName, hashedIdCardNumber) {
     return web3.eth.abi.encodeFunctionCall(
         {
             "name": funcName, 
             "type": "function",
-            "inputs": [{"name": "mobileNumber", "type": "bytes32"}]
-        }, [web3.utils.toHex(mobileNumber)])
+            "inputs": [{"name": "hashedIdCardNumber", "type": "string"}]
+        }, [hashedIdCardNumber])
 }

@@ -159,7 +159,7 @@ export default {
         winner: {
           firstName: '',
           lastName: '',
-          mobileNumber: ''
+          hashedIdCardNumber: ''
         },
         subject: '',
         awardDate: '',
@@ -182,7 +182,7 @@ export default {
         const wr = res[1].data
         this.certification = cr
         this.certification.winner = wr
-        this.hashCode = hashCodeGenerator(wr.mobileNumber)
+        this.hashCode = hashCodeGenerator(wr.hashedIdCardNumber)
         this.backgroundImage = bgGenerator(cr.certificationType)
         this.logos = logoGenerator(cr.certificationType, cr.partner)
         this.isLoading = false
