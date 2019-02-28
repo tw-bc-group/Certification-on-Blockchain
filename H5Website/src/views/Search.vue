@@ -38,7 +38,7 @@ export default {
   methods: {
     clickHandler () {
       if (this.searchInput === null) return
-      const query = JSON.stringify(hash(this.searchInput))
+      const query = hash(this.searchInput)
       this.$router.push({ name: 'certification', query: { query } })
     }
   }
