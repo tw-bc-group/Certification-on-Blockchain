@@ -58,7 +58,7 @@
 </style>
 
 <script>
-import abi from '../abi'
+import abi from '../abi.json'
 import {contractAddress} from '../constant'
 import {hash} from '../util'
 
