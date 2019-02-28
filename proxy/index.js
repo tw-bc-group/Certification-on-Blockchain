@@ -25,7 +25,7 @@ const web3 = new Web3()
 
 const conf = {
     network: "https://api-ropsten.etherscan.io/",
-    contractAddress: "0x6aC9917cef1349393Bb682EEC62E514E6a018Ee1",
+    contractAddress: "0x8625953dd94b6e1507204a84e86006ab92ebf4ce",
     API_KEY: "UK1C9AYRMU7BG3ZA2F87MZZ4P3F84VKEXG"
 }
 

@@ -9,4 +9,4 @@ export const bgImgTW = 'https://upload-images.jianshu.io/upload_images/217988-05
 export const bgImgCorporate = 'https://upload-images.jianshu.io/upload_images/217988-a37225109c8bc8cc.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240'
 export const bgImgCommunity = 'https://upload-images.jianshu.io/upload_images/217988-366d97fd8575b9e6.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240'
 export const bgImgUniversity = 'https://upload-images.jianshu.io/upload_images/217988-55daa3d87ccb36c0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240'
-export const contractAddress = '0xb42efad749112dd32dc0392b85b40bf72ab9cd34'
+export const contractAddress = '0x8625953dd94b6e1507204a84e86006ab92ebf4ce'
