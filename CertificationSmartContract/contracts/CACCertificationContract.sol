@@ -12,7 +12,7 @@ contract CACCertificationContract is Ownable {
     struct Winner {
         string firstName;
         string lastName;
-        bytes32 mobileNumber;
+        bytes32 hashedIdCardNumber;
     }
 
     struct Certification {
@@ -21,6 +21,7 @@ contract CACCertificationContract is Ownable {
         string awardDate;
         string expiredDate;
         string partner;
+        address issuer;
     }
 
     function setIssuer(address issuer) public onlyOwner {
@@ -36,18 +37,18 @@ contract CACCertificationContract is Ownable {
         return false;
     }
 
-    function issueCertification(string memory certificationType, string memory firstName, string memory lastName, bytes32 mobileNumber, string memory subject, string memory awardDate, string memory expiredDate, string memory partner) public {
-        certificationMap[mobileNumber] = Certification(certificationType, subject, awardDate, expiredDate, partner);
-        winnerMap[mobileNumber] = Winner(firstName, lastName, mobileNumber);
+    function issueCertification(string memory certificationType, string memory firstName, string memory lastName, bytes32 hashedIdCardNumber, string memory subject, string memory awardDate, string memory expiredDate, string memory partner, address issuer) public {
+        certificationMap[hashedIdCardNumber] = Certification(certificationType, subject, awardDate, expiredDate, partner, issuer);
+        winnerMap[hashedIdCardNumber] = Winner(firstName, lastName, hashedIdCardNumber);
     }
 
-    function getCertification(bytes32 mobileNumber) view public returns(string memory, string memory, string memory, string memory, string memory) {
-        Certification storage cert = certificationMap[mobileNumber];
+    function getCertification(bytes32 hashedIdCardNumber) view public returns(string memory, string memory, string memory, string memory, string memory) {
+        Certification storage cert = certificationMap[hashedIdCardNumber];
         return (cert.certificationType, cert.subject, cert.awardDate, cert.expiredDate, cert.partner);
     }
 
-    function getWinner(bytes32 mobileNumber) view public returns(string memory, string memory, bytes32) {
-        Winner storage winner = winnerMap[mobileNumber];
-        return (winner.firstName, winner.lastName, bytes32(winner.mobileNumber));
+    function getWinner(bytes32 hashedIdCardNumber) view public returns(string memory, string memory, bytes32) {
+        Winner storage winner = winnerMap[hashedIdCardNumber];
+        return (winner.firstName, winner.lastName, bytes32(winner.hashedIdCardNumber));
     }
 }
