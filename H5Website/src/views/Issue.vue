@@ -58,9 +58,9 @@
 </style>
 
 <script>
-import hash from 'hash.js'
 import abi from '../abi'
 import {contractAddress} from '../constant'
+import {hash} from '../util'
 
 export default {
   name: 'issue',
@@ -85,7 +85,7 @@ export default {
         this.certificationType,
         this.firstName,
         this.lastName,
-        hash.sha256().update(this.idCardNumber + hash.sha256().update(this.idCardNumber).digest('hex')).digest('hex'),
+        hash(this.idCardNumber),
         this.subject,
         this.awardDate,
         this.expiredDate,

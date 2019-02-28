@@ -26,6 +26,7 @@
 </style>
 
 <script>
+import {hash} from '../util'
 export default {
   name: 'search',
   components: {},
@@ -37,7 +38,7 @@ export default {
   methods: {
     clickHandler () {
       if (this.searchInput === null) return
-      const query = JSON.stringify(this.searchInput)
+      const query = JSON.stringify(hash(this.searchInput))
       this.$router.push({ name: 'certification', query: { query } })
     }
   }
