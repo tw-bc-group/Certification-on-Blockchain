@@ -9,8 +9,11 @@ contract CacContract is ERC721Full {
         string subject;
         string firstName;
         string lastName;
+        // use uint64 to store date
         uint64 issueDate;
         uint64 expireDate;
+        // use additional data to store certification type and partner
+        string additionalData;
     }
 
     constructor () public ERC721Full("CAC", "CAC") {}
@@ -21,10 +24,11 @@ contract CacContract is ERC721Full {
         string memory lastName,
         uint64 issueDate,
         uint64 expireDate,
+        string memory additionalData,
         address to
     ) public {
         uint256 tokenId = uint256(keccak256(abi.encodePacked(subject, firstName, lastName, issueDate)));
         _mint(to, tokenId);
-        certifications[tokenId] = Certification(subject, firstName, lastName, issueDate, expireDate);
+        certifications[tokenId] = Certification(subject, firstName, lastName, issueDate, expireDate, additionalData);
     }
 }

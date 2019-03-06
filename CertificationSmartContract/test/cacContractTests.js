@@ -10,9 +10,10 @@ contract("CacContract", accounts => {
         const lastName = "Qu";
         const issueDate = Date.UTC(2019, 2, 1);
         const expireDate = Date.UTC(2021, 2, 1);
+        const additionalData = "JSON string";
         const to = accounts[1]
 
-        const tx = await instance.issue(subject, firstName, lastName, issueDate, expireDate, to);
+        const tx = await instance.issue(subject, firstName, lastName, issueDate, expireDate, additionalData, to);
         const tokenId = tx.logs[0].args.tokenId;
 
         const certification = await instance.certifications(tokenId);
@@ -21,5 +22,6 @@ contract("CacContract", accounts => {
         expect(certification.lastName).to.equal(lastName);
         expect(certification.issueDate.eq(new BN(issueDate))).to.be.true;
         expect(certification.expireDate.eq(new BN(expireDate))).to.be.true;
+        expect(certification.additionalData).to.equal(additionalData);
     });
 });
