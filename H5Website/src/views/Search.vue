@@ -1,8 +1,9 @@
 <template>
-  <div class="search">
-    <h3>认证查询</h3>
-    <input type="text" class="search-input" placeholder="请输入身份证号：" v-model="searchInput">
-    <button @click="clickHandler" class="search-btn">查询</button>
+  <div>
+    <section class="search">
+      <input type="text" class="search-input" placeholder="请输入证书编号：" v-model="id">
+      <button @click="searchId" class="search-btn search-id">查询</button>
+    </section>
   </div>
 </template>
 
@@ -22,7 +23,8 @@
       font-size 16px
       border-radius 3em
       box-sizing border-box
-      background linear-gradient(to right, #F13235, #FA913D)
+      &.search-id
+        background linear-gradient(to right, #F13235, #FA913D)
 </style>
 
 <script>
@@ -32,14 +34,13 @@ export default {
   components: {},
   data () {
     return {
-      searchInput: null
+      id: null
     }
   },
   methods: {
-    clickHandler () {
-      if (this.searchInput === null) return
-      const query = hash(this.searchInput)
-      this.$router.push({ name: 'certification', query: { query } })
+    searchId () {
+      if (this.id === null) return
+      this.$router.push({ name: 'certification', params: { id: this.id } })
     }
   }
 }
