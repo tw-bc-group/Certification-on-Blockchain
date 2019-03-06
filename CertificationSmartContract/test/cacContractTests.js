@@ -15,6 +15,8 @@ contract("CacContract", accounts => {
 
         const tx = await instance.issue(subject, firstName, lastName, issueDate, expireDate, additionalData, to);
         const tokenId = tx.logs[0].args.tokenId;
+        const calculatedTokenId = web3.utils.soliditySha3(subject, firstName, lastName, issueDate);
+        expect(tokenId.eq(web3.utils.toBN(calculatedTokenId))).to.be.true;
 
         const certification = await instance.certifications(tokenId);
         expect(certification.subject).to.equal(subject);

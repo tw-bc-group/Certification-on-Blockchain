@@ -27,7 +27,7 @@ contract CacContract is ERC721Full {
         string memory additionalData,
         address to
     ) public {
-        uint256 tokenId = uint256(keccak256(abi.encodePacked(subject, firstName, lastName, issueDate)));
+        uint256 tokenId = uint256(keccak256(abi.encodePacked(subject, firstName, lastName, uint256(issueDate))));
         _mint(to, tokenId);
         certifications[tokenId] = Certification(subject, firstName, lastName, issueDate, expireDate, additionalData);
     }
