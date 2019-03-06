@@ -1,0 +1,31 @@
+[{
+  "constant": true,
+  "inputs": [{
+    "name": "",
+    "type": "uint256"
+  }],
+  "name": "certifications",
+  "outputs": [{
+    "name": "subject",
+    "type": "string"
+  },{
+    "name": "firstName",
+    "type": "string"
+  },{
+    "name": "lastName",
+    "type": "string"
+  },{
+    "name": "issueDate",
+    "type": "uint64"
+  },{
+    "name": "expireDate",
+    "type": "uint64"
+  },{
+    "name": "additionalData",
+    "type": "string"
+  }],
+  "payable": false,
+  "stateMutability": "view",
+  "type": "function",
+  "signature": "0x3c0359a4"
+}]

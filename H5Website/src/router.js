@@ -24,7 +24,7 @@ export default new Router({
       component: () => import('./views/Issue.vue')
     },
     {
-      path: '/certification',
+      path: '/certification/:id',
       name: 'certification',
       component: () => import('./views/Certification.vue')
     }

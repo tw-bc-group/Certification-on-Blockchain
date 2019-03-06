@@ -10,16 +10,16 @@
           <p>completion</p>
         </div>
         <div class="winner-wrapper">
-          <p>{{certification.winner.firstName}}</p>
-          <p>{{certification.winner.lastName}}</p>
+          <p>{{certification.firstName}}</p>
+          <p>{{certification.lastName}}</p>
         </div>
         <div class="content-wrapper padding-wrapper">
           <p class="subject">{{certification.subject}}</p>
-          <p class="hash-code">{{hashCode}}</p>
+          <p class="hash-code">{{id | slice}}</p>
         </div>
         <div class="date-wrapper padding-wrapper">
-          <p>{{certification.awardDate}}</p>
-          <p v-if="certification.expiredDate">Expired at: {{certification.expiredDate}}</p>
+          <p>{{certification.issueDate | date}}</p>
+          <p v-if="certification.expireDate">Expired at: {{certification.expireDate | date}}</p>
         </div>
       </div>
     </div>
@@ -84,7 +84,6 @@
 </style>
 
 <script>
-import httpDriver from '../driver/http'
 import * as R from 'ramda'
 import {
   bgImgTW,
@@ -99,8 +98,7 @@ import {
   communityLogo,
   universityLogo
 } from '../constant'
-
-const hashCodeGenerator = (str) => str.substring(0, 19)
+import { web3, contract } from '../contract'
 
 const bgGenerator = R.cond([
   [
@@ -154,48 +152,50 @@ export default {
   data () {
     return {
       isLoading: true,
+      id: this.$route.params.id,
       certification: {
-        certificationType: '',
-        winner: {
-          firstName: '',
-          lastName: '',
-          hashedIdCardNumber: ''
-        },
         subject: '',
-        awardDate: '',
-        expiredDate: '',
-        partner: ''
+        firstName: '',
+        lastName: '',
+        issueDate: '',
+        expireDate: ''
       },
-      hashCode: null,
-      backgroundImage: null,
-      logos: null
+      backgroundImage: bgGenerator(''),
+      logos: logoGenerator()
     }
   },
-  methods: {
-    dataProvider ({ getCertification, getWinner }) {
-      const { query } = this.$route.query
-      const certification = getCertification(query)
-      const winner = getWinner(query)
-
-      Promise.all([certification, winner]).then(res => {
-        const cr = res[0].data
-        const wr = res[1].data
-        this.certification = cr
-        this.certification.winner = wr
-        this.hashCode = hashCodeGenerator(wr.hashedIdCardNumber)
-        this.backgroundImage = bgGenerator(cr.certificationType)
-        this.logos = logoGenerator(cr.certificationType, cr.partner)
-        this.isLoading = false
-      })
-    }
+  filters: {
+    date: value => new Date(value).toLocaleDateString(),
+    slice: value => value.slice(0, 20)
   },
   pures: {
-    hashCodeGenerator,
     bgGenerator,
     logoGenerator
   },
   created () {
-    this.dataProvider(httpDriver)
+    const tokenId = web3.utils.hexToNumberString(this.$route.params.id)
+    contract.methods.certifications(tokenId).call().then(certification => {
+      this.certification.subject = certification.subject
+      this.certification.firstName = certification.firstName
+      this.certification.lastName = certification.lastName
+      this.certification.issueDate = parseInt(certification.issueDate)
+      this.certification.expireDate = parseInt(certification.expireDate)
+      try {
+        const addtionalData = JSON.parse(certification.addtionalData)
+        if (typeof addtionalData.type === 'undefined') {
+          return
+        }
+        this.backgroundImage = bgGenerator(addtionalData.type)
+        if (typeof addtionalData.partner === 'undefined') {
+          return
+        }
+        this.logos = logoGenerator(addtionalData.type, addtionalData.partner)
+      } catch {
+        this.backgroundImage = bgGenerator('')
+        this.logos = logoGenerator()
+      }
+      this.isLoading = false
+    })
   }
 }
 </script>
