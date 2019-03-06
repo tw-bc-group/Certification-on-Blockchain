@@ -4,7 +4,7 @@ const web3 = getWeb3()
 var CACCertificationContract = artifacts.require("./CACCertificationContract.sol");
 
 contract('CACCertificationContract', (accounts) => {
-    it("should issue certification successfully given the sender is a issuer", async () => {
+    it.skip("should issue certification successfully given the sender is a issuer", async () => {
         const instance = await CACCertificationContract.new();
 
         await instance.setIssuer(accounts[0]);
@@ -33,7 +33,7 @@ contract('CACCertificationContract', (accounts) => {
         assert.equal(winner.valueOf()[2].valueOf(), hashedIdCardNumberString);
     });
 
-    it("should throw error given the sender is not a issuer", async () => {
+    it.skip("should throw error given the sender is not a issuer", async () => {
         const instance = await CACCertificationContract.new();
         
         var type = "tw";
