@@ -1,5 +1,9 @@
 <template>
   <div id="app">
+    <div id="nav">
+      <router-link to="/search">查询证书</router-link> |
+      <router-link to="/issue">颁发证书</router-link>
+    </div>
     <router-view/>
   </div>
 </template>
@@ -11,6 +15,14 @@
   text-align center
   color #2c3e50
   max-width 400px;
+
+#nav
+  padding: 30px;
+  a
+    font-weight: bold;
+    color: #2c3e50;
+    &.router-link-exact-active
+      color: #F13235;
 
 *
   margin 0
