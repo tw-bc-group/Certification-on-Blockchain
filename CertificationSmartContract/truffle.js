@@ -1,30 +1,23 @@
-/*
- * NB: since truffle-hdwallet-provider 0.0.5 you must wrap HDWallet providers in a 
- * function when declaring them. Failure to do so will cause commands to hang. ex:
- * ```
- * mainnet: {
- *     provider: function() { 
- *       return new HDWalletProvider(mnemonic, 'https://mainnet.infura.io/<infura-key>') 
- *     },
- *     network_id: '1',
- *     gas: 4500000,
- *     gasPrice: 10000000000,
- *   },
- */
+const argv = require('minimist')(process.argv.slice(2));
+const HDWalletProvider = require("truffle-hdwallet-provider");
+const infuraAccessToken = "fb032c29f8c94bf7aed00f42515ad21f";
+const provider = `https://ropsten.infura.io/v3/${infuraAccessToken}`;
 
 module.exports = {
-  	// See <http://truffleframework.com/docs/advanced/configuration>
-  	// to customize your Truffle configuration!
 	networks: {
-		development: {
+		local: {
 			host: '127.0.0.1',
-			port: process.env.npm_package_config_dev_port,
+			port: 8545,
 			network_id: '*'
 		},
-		test: {
-			host: '127.0.0.1',
-			port: process.env.npm_package_config_test_port,
-			network_id: '*'
+		ropsten: {
+			network_id: 3,
+			provider: () => {
+				if (typeof argv.mnemonic === "undefined") {
+					throw new Error("Please provide mnemonic to deploy to ropsten!");
+				}
+				return new HDWalletProvider(argv.mnemonic, provider);
+			}
 		},
 		production: {
 			network_id: 3,
