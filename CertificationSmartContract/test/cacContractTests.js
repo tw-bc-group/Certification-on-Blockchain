@@ -1,5 +1,4 @@
 const CacContract = artifacts.require("CacContract");
-const BN = web3.utils.BN;
 
 contract("CacContract", accounts => {
     it("should issue certification", async () => {
@@ -22,8 +21,8 @@ contract("CacContract", accounts => {
         expect(certification.subject).to.equal(subject);
         expect(certification.firstName).to.equal(firstName);
         expect(certification.lastName).to.equal(lastName);
-        expect(certification.issueDate.eq(new BN(issueDate))).to.be.true;
-        expect(certification.expireDate.eq(new BN(expireDate))).to.be.true;
+        expect(certification.issueDate.eq(web3.utils.toBN(issueDate))).to.be.true;
+        expect(certification.expireDate.eq(web3.utils.toBN(expireDate))).to.be.true;
         expect(certification.additionalData).to.equal(additionalData);
     });
 });
