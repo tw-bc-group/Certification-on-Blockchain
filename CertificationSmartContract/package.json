@@ -10,7 +10,8 @@
     "deploy:local": "truffle deploy --network local --reset",
     "deploy:ropsten": "truffle deploy --network ropsten --reset",
     "deploy:production": "truffle deploy --network production",
-    "console:local": "truffle console --network local"
+    "console:local": "truffle console --network local",
+    "console:ropsten": "truffle console --network ropsten"
   },
   "author": "ThoughtWorks",
   "devDependencies": {
