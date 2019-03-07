@@ -1,11 +1,13 @@
-<template></template>
+<template>
+  <div></div>
+</template>
 
 <script>
 import { contract, walletAddress, web3 } from '../contract'
 
 export default {
   name: 'home',
-  async created() {
+  async created () {
     const wallet = walletAddress()
     if (typeof wallet === 'undefined') {
       this.$router.push({ name: 'search' })
