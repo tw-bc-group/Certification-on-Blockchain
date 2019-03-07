@@ -50,7 +50,7 @@
 </style>
 
 <script>
-import { web3 } from '../contract'
+import { retrieveWeb3 } from '../web3Provider'
 
 export default {
   name: 'search',
@@ -74,8 +74,9 @@ export default {
       if (this.firstName == null || this.lastName == null || this.subject == null || this.issueDate == null) {
         return
       }
+      const web3 = retrieveWeb3()
       const tokenId = web3.utils.soliditySha3(this.subject, this.firstName, this.lastName, Date.parse(this.issueDate))
-      this.$router.push({ name: 'certification', params: { id: tokenId.slice(2) } })
+      this.$router.push({ name: 'certification', params: { id: tokenId } })
     }
   }
 }

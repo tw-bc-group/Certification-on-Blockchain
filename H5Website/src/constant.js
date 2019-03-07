@@ -11,5 +11,5 @@ export const bgImgCommunity = 'https://upload-images.jianshu.io/upload_images/21
 export const bgImgUniversity = 'https://upload-images.jianshu.io/upload_images/217988-55daa3d87ccb36c0.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240'
 // export const contractAddress = '0x8625953dd94b6e1507204a84e86006ab92ebf4ce'
 // export const endpoint = 'https://ropsten.infura.io/v3/fb032c29f8c94bf7aed00f42515ad21f'
-export const contractAddress = '0xcB2bc630FE375b690341638372E66990764cB5d1'
+export const contractAddress = '0xBa900047DA0060cAd0cac7c608340B52af4fbbf0'
 export const endpoint = 'http://localhost:8545'

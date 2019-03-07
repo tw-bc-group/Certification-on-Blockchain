@@ -1,21 +1,21 @@
 <template>
   <div class="issue">
     <h3>颁发证书</h3>
+    <input type="text" class="text-input" placeholder="请输入主题：" v-model="subject">
     <input type="text" class="half-text-input" placeholder="姓：" v-model="lastName">
     <span class="half-text-input-separator" />
     <input type="text" class="half-text-input" placeholder="名：" v-model="firstName">
-    <input type="text" class="text-input" placeholder="请输入身份证号：" v-model="idCardNumber">
-    <select class="dropdown" v-model="certificationType">
+    <input type="date" class="text-input date-input" placeholder="获得时间：" v-model="issueDate">
+    <input type="date" class="text-input date-input" placeholder="过期时间：" v-model="expireDate">
+    <select class="dropdown" v-model="additionalData.type">
       <option value="">请选择证书类型</option>
-      <option value="corporate">Corporate</option>
-      <option value="university">University</option>
-      <option value="community">Community</option>
-      <option value="tw">TW</option>
+      <option value="Corporate">Corporate</option>
+      <option value="University">University</option>
+      <option value="Community">Community</option>
+      <option value="TW">TW</option>
     </select>
-    <input type="text" class="text-input" placeholder="请输入主题：" v-model="subject">
-    <input type="date" class="text-input date-input" placeholder="获得时间：" v-model="awardDate">
-    <input type="date" class="text-input date-input" placeholder="过期时间：" v-model="expiredDate">
-    <input type="text" class="text-input" placeholder="请输入颁发证书组织：" v-model="partner" v-if="certificationType != 'tw'">
+    <input type="text" class="text-input" placeholder="请输入颁发证书组织：" v-model="additionalData.partner" v-if="additionalData.type != 'tw'">
+    <input type="text" class="text-input" placeholder="获得者钱包地址：" v-model="to">
     <button @click="clickHandler" class="confirm-btn">颁发证书</button>
   </div>
 </template>
@@ -58,44 +58,44 @@
 </style>
 
 <script>
-import abi from '../abi.json'
-import {contractAddress} from '../constant'
-import {hash} from '../util'
+import { retrieveContract, retrieveWeb3, walletAddress } from '../web3Provider'
 
 export default {
   name: 'issue',
-  components: {},
   data () {
     return {
+      subject: '',
       firstName: '',
       lastName: '',
-      idCardNumber: '',
-      certificationType: '',
-      subject: '',
-      awardDate: '',
-      expiredDate: '',
-      partner: '',
+      issueDate: '',
+      expireDate: '',
+      additionalData: {
+        type: '',
+        partner: ''
+      },
+      to: ''
     }
   },
   methods: {
-    clickHandler () {
-      var MyContract = web3.eth.contract(abi)
-      var contract = MyContract.at(contractAddress)
-      contract.issueCertification(
-        this.certificationType,
+    async clickHandler () {
+      const contract = retrieveContract()
+      const address = walletAddress()
+      const web3 = retrieveWeb3()
+
+      const tx = await contract.methods.issue(
+        this.subject,
         this.firstName,
         this.lastName,
-        hash(this.idCardNumber),
-        this.subject,
-        this.awardDate,
-        this.expiredDate,
-        this.partner,
-        (error) => {
-        if (error) {
-          alert(`颁发失败，错误信息如下\n\n${error}`)
-          return
-        }
-        alert('颁发成功！')
+        Date.parse(this.issueDate),
+        Date.parse(this.expireDate),
+        JSON.stringify(this.additionalData),
+        this.to
+      ).send({ from: address })
+
+      const tokenId = tx.events.Transfer.returnValues.tokenId;
+      this.$router.push({
+        name: 'certification',
+        params: { id: web3.utils.numberToHex(tokenId) }
       })
     }
   }

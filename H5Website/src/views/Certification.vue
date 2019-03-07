@@ -98,7 +98,7 @@ import {
   communityLogo,
   universityLogo
 } from '../constant'
-import { web3, contract } from '../contract'
+import { retrieveContract, retrieveWeb3 } from '../web3Provider'
 
 const bgGenerator = R.cond([
   [
@@ -173,6 +173,9 @@ export default {
     logoGenerator
   },
   created () {
+    const contract = retrieveContract()
+    const web3 = retrieveWeb3()
+
     const tokenId = web3.utils.hexToNumberString(this.$route.params.id)
     contract.methods.certifications(tokenId).call().then(certification => {
       this.certification.subject = certification.subject
@@ -181,15 +184,15 @@ export default {
       this.certification.issueDate = parseInt(certification.issueDate)
       this.certification.expireDate = parseInt(certification.expireDate)
       try {
-        const addtionalData = JSON.parse(certification.addtionalData)
-        if (typeof addtionalData.type === 'undefined') {
+        const additionalData = JSON.parse(certification.additionalData)
+        if (typeof additionalData.type === 'undefined') {
           return
         }
-        this.backgroundImage = bgGenerator(addtionalData.type)
-        if (typeof addtionalData.partner === 'undefined') {
+        this.backgroundImage = bgGenerator(additionalData.type)
+        if (typeof additionalData.partner === 'undefined') {
           return
         }
-        this.logos = logoGenerator(addtionalData.type, addtionalData.partner)
+        this.logos = logoGenerator(additionalData.type, additionalData.partner)
       } catch {
         this.backgroundImage = bgGenerator('')
         this.logos = logoGenerator()
