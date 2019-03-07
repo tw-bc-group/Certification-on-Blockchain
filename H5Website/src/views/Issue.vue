@@ -92,7 +92,7 @@ export default {
         this.to
       ).send({ from: address })
 
-      const tokenId = tx.events.Transfer.returnValues.tokenId;
+      const tokenId = tx.events.Transfer.returnValues.tokenId
       this.$router.push({
         name: 'certification',
         params: { id: web3.utils.numberToHex(tokenId) }
