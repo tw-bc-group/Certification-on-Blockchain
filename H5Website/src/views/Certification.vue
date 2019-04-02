@@ -10,8 +10,14 @@
           <p>completion</p>
         </div>
         <div class="winner-wrapper">
-          <p>{{certification.firstName}}</p>
-          <p>{{certification.lastName}}</p>
+          <div class="avatar-wrapper">
+            <img class="avatar" :src="require('../assets/avatar.jpg')" :style="{border: '4px solid'+ color}" alt="avatar">
+            <div class="square" :style="{background: color}"></div>
+          </div>
+          <div class="name-wrapper">
+            <p>{{certification.firstName}}</p>
+            <p>{{certification.lastName}}</p>
+          </div>
         </div>
         <div class="content-wrapper padding-wrapper">
           <p class="subject">{{certification.subject}}</p>
@@ -56,21 +62,51 @@
 
   .winner-wrapper
     padding-top 25px
+    position relative
+
+  .name-wrapper
     font-size 35px
     font-weight 900
-    line-height 0.9
+    line-height 1
     text-transform uppercase
     color white
+
+  .avatar-wrapper
+    position absolute
+    top -40px
+    right 100px
+
+  .avatar
+    width 60px
+    height 60px
+    object-fit cover
+    border-radius 50%
+    position absolute
+    z-index 10
+
+  .square
+    content ""
+    display inline-block
+    width 16px
+    height 16px
+    position absolute
+    left 4px
+    top 40px
+    box-shadow 0 2px 10px #333333
 
   .padding-wrapper
     padding 0 4px
 
   .subject
-    padding-top 29px
+    padding-top 25px
     font-size 20px
     text-transform uppercase
     font-weight 900
     letter-spacing 0.1px
+    text-overflow ellipsis
+    overflow hidden
+    white-space nowrap
+    width 90%
 
   .hash-code
     font-size 9px
@@ -112,6 +148,21 @@ const bgGenerator = R.cond([
   ],
   [
     R.T, R.always(bgImgTW)
+  ]
+])
+
+const colourGenerator = R.cond([
+  [
+    R.equals('Corporate'), R.always('#7ABC41')
+  ],
+  [
+    R.equals('Community'), R.always('#F68346')
+  ],
+  [
+    R.equals('University'), R.always('#985AC7')
+  ],
+  [
+    R.T, R.always('#4EACEC')
   ]
 ])
 
@@ -161,7 +212,8 @@ export default {
         expireDate: ''
       },
       backgroundImage: bgGenerator(''),
-      logos: logoGenerator()
+      logos: logoGenerator(),
+      color: colourGenerator()
     }
   },
   filters: {
@@ -170,7 +222,8 @@ export default {
   },
   pures: {
     bgGenerator,
-    logoGenerator
+    logoGenerator,
+    colourGenerator
   },
   created () {
     const contract = retrieveContract()
@@ -192,10 +245,13 @@ export default {
         if (typeof additionalData.partner === 'undefined') {
           return
         }
+        console.log(additionalData.partner)
         this.logos = logoGenerator(additionalData.type, additionalData.partner)
+        this.color = colourGenerator(additionalData.type)
       } catch {
         this.backgroundImage = bgGenerator('')
         this.logos = logoGenerator()
+        this.color = colourGenerator('')
       }
       this.isLoading = false
     })
